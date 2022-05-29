@@ -53,6 +53,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         jButtonHotelReservas.setText("Informe Reservas Hotel por habitación");
+        jButtonHotelReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHotelReservasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +124,40 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonInformeNotasAlumnosActionPerformed
+
+    private void jButtonHotelReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHotelReservasActionPerformed
+        try {
+            String report = "./src/hotel/Rerservas.jrxml";
+            
+            JasperReport jasperReport = JasperCompileManager.compileReport(report);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/hotel?useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+            
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "informe_reservas.pdf");
+            
+            File file = new File("informe_reservas.pdf");
+            
+            Desktop.getDesktop().open(file);
+            
+        } catch (JRException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonHotelReservasActionPerformed
 
     /**
      * @param args the command line arguments
