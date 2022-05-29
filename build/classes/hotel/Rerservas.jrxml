@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rerservas" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="652b0018-afd6-4ab3-bfa2-0e903751d5e6">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rerservas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="652b0018-afd6-4ab3-bfa2-0e903751d5e6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -28,8 +28,8 @@ left join clientes on nCliente = idCliente]]>
 	<title>
 		<band height="108" splitType="Stretch">
 			<image>
-				<reportElement x="155" y="0" width="368" height="106" uuid="6e830c37-ccc8-4c41-a7e6-9544b0756f1e"/>
-				<imageExpression><![CDATA["D:\\Desarrollo\\Proyectos\\InformesiReport\\src\\imagenes\\reservas.png"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="108" uuid="430b5fb5-2a01-4fc4-ada0-77a64aabf157"/>
+				<imageExpression><![CDATA["imagenes\\reservas.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
