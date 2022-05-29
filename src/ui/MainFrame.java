@@ -38,18 +38,21 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabelTitulo = new javax.swing.JLabel();
-        jButtonInforme1 = new javax.swing.JButton();
+        jButtonInformeNotasAlumnos = new javax.swing.JButton();
+        jButtonHotelReservas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabelTitulo.setText("INFORMES DE ALUMNOS");
 
-        jButtonInforme1.setText("Informe por alumnos");
-        jButtonInforme1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInformeNotasAlumnos.setText("Informe de notas por alumnos");
+        jButtonInformeNotasAlumnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonInforme1ActionPerformed(evt);
+                jButtonInformeNotasAlumnosActionPerformed(evt);
             }
         });
+
+        jButtonHotelReservas.setText("Informe Reservas Hotel por habitación");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,12 +61,15 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButtonInforme1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(129, 129, 129)
-                        .addComponent(jLabelTitulo)))
-                .addContainerGap(133, Short.MAX_VALUE))
+                        .addComponent(jLabelTitulo)
+                        .addGap(0, 127, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonHotelReservas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonInformeNotasAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,15 +77,17 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jLabelTitulo)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonInforme1)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addComponent(jButtonInformeNotasAlumnos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonHotelReservas)
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonInforme1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme1ActionPerformed
+    private void jButtonInformeNotasAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformeNotasAlumnosActionPerformed
         try {
             String report = "./src/informes/NotasMedias.jrxml";
             
@@ -110,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButtonInforme1ActionPerformed
+    }//GEN-LAST:event_jButtonInformeNotasAlumnosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,7 +156,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonInforme1;
+    private javax.swing.JButton jButtonHotelReservas;
+    private javax.swing.JButton jButtonInformeNotasAlumnos;
     private javax.swing.JLabel jLabelTitulo;
     // End of variables declaration//GEN-END:variables
 }
