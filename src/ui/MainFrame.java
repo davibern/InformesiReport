@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
@@ -40,6 +42,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jButtonInformeNotasAlumnos = new javax.swing.JButton();
         jButtonHotelReservas = new javax.swing.JButton();
+        jButtonHotelReservasHabitacion = new javax.swing.JButton();
+        jTextFieldDesde = new javax.swing.JTextField();
+        jTextFieldHasta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +64,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButtonHotelReservasHabitacion.setText("Informe de duración y número de reservas");
+        jButtonHotelReservasHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHotelReservasHabitacionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,14 +78,23 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(jLabelTitulo)
-                        .addGap(0, 127, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonHotelReservas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonInformeNotasAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jButtonInformeNotasAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(129, 129, 129)
+                                .addComponent(jLabelTitulo))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButtonHotelReservasHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 33, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -85,7 +106,12 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jButtonInformeNotasAlumnos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonHotelReservas)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonHotelReservasHabitacion)
+                    .addComponent(jTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();
@@ -159,6 +185,43 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonHotelReservasActionPerformed
 
+    private void jButtonHotelReservasHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHotelReservasHabitacionActionPerformed
+        try {
+            String report = "./src/hotel/ReservasAgrupadas.jrxml";
+            
+            Map<String, Object> params = new HashMap<>();
+            params.put("desde", Integer.parseInt(this.jTextFieldDesde.getText()));
+            params.put("hasta", Integer.parseInt(this.jTextFieldHasta.getText()));
+            
+            JasperReport jasperReport = JasperCompileManager.compileReport(report);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/hotel?useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+            
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "informe_reservas_agrupadas.pdf");
+            
+            File file = new File("informe_reservas_agrupadas.pdf");
+            
+            Desktop.getDesktop().open(file);
+            
+        } catch (JRException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonHotelReservasHabitacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -196,7 +259,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonHotelReservas;
+    private javax.swing.JButton jButtonHotelReservasHabitacion;
     private javax.swing.JButton jButtonInformeNotasAlumnos;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JTextField jTextFieldDesde;
+    private javax.swing.JTextField jTextFieldHasta;
     // End of variables declaration//GEN-END:variables
 }

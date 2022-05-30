@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReservasAgrupadas" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a155a00-15b1-4557-b07a-9ff95efcba4c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="desde" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    idReserva,
+    nCliente,
+    Nombre,
+    TipoCliente,
+    tipo,
+    precioDia,
+    fechaInicio,
+    fechaFin,
+    datediff(reservas.fechaFin, reservas.fechaInicio) as numerodias,
+    nHabitacion
+from
+    reservas
+    inner join clientes on nCliente = idCliente
+    inner join habitaciones on nHabitacion = numero
+where
+    nHabitacion between $P{desde} and $P{hasta}
+order by nHabitacion, idReserva]]>
+	</queryString>
+	<field name="idReserva" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nCliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TipoCliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precioDia" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaInicio" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaFin" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numerodias" class="java.lang.Long"/>
+	<field name="nHabitacion" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="numerodias_1" class="java.lang.Long" resetType="Group" resetGroup="habitacion" calculation="Sum">
+		<variableExpression><![CDATA[$F{numerodias}]]></variableExpression>
+	</variable>
+	<group name="habitacion" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{nHabitacion}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement x="0" y="0" width="39" height="20" uuid="8aa4b066-d108-413e-af69-15d11938b7f9"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="49" y="0" width="50" height="20" uuid="25c0b63e-bb3b-4b98-9638-d2fc2c0621d6"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Nº Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="113" y="0" width="139" height="20" uuid="ea06a2a4-bc4e-4892-8a7a-b8ad19fed8c1"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Nombre]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="266" y="0" width="72" height="20" uuid="6fa4c06a-0880-44ad-8bf9-32d67823470e"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Tipo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="348" y="0" width="65" height="20" uuid="b2124f6f-47ab-4b6d-902f-2c227df00972"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[F. Inicio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="423" y="2" width="63" height="20" uuid="00ce05fa-42c7-47aa-9c0f-f5996229bf67"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[F. Fin]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="510" y="2" width="45" height="20" uuid="479597bd-50d4-4efc-8b08-e36d26f94af6"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Días]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<textField>
+					<reportElement x="395" y="0" width="160" height="20" uuid="09ba1f39-109e-4cf3-9f07-133d754039ae"/>
+					<textFieldExpression><![CDATA["Número de días en total: " + $V{numerodias_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="413" y="20" width="142" height="20" uuid="0a0d86e7-829a-46af-9049-77e9574862fc"/>
+					<textFieldExpression><![CDATA["Número de reservas: " + $V{habitacion_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="26" forecolor="#FF6633" uuid="ba403025-f7c3-42dd-b254-d62c1536a25e"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información sobre duración y número de reservas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="18" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="99" height="20" uuid="0b3c050a-7969-450f-9349-943e1ada791d"/>
+				<textFieldExpression><![CDATA["Habitación: " + $F{nHabitacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="0" width="137" height="20" uuid="cdfbf563-2a88-4039-a9cc-28682647c72e"/>
+				<textFieldExpression><![CDATA["Tipo de Habitación: " + $F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="0" width="119" height="20" uuid="47a1f497-fa5c-475d-a1dc-d15d631710f2"/>
+				<textFieldExpression><![CDATA["Precio por día: " + $F{precioDia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="39" height="20" uuid="c9d72605-e3fc-4e37-bc05-b7414f23f03e"/>
+				<textFieldExpression><![CDATA[$F{idReserva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="0" width="50" height="20" uuid="2b2277fa-b672-496e-ab8a-865518f54314"/>
+				<textFieldExpression><![CDATA[$F{nCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="0" width="139" height="20" uuid="ae032a16-5845-4718-aa83-9cd59c8c7a20"/>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="72" height="20" uuid="853a0b92-c631-4f2e-8f81-123c461be2f0"/>
+				<textFieldExpression><![CDATA[$F{TipoCliente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="348" y="0" width="65" height="20" uuid="5254e223-41ac-4b99-9d11-998abf4b0101"/>
+				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="423" y="0" width="63" height="20" uuid="f34ebd5c-abd1-4c85-b71a-79ce88a12d4d"/>
+				<textFieldExpression><![CDATA[$F{fechaFin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="0" width="44" height="20" uuid="fdea4da4-6bb9-473a-9f69-e0ae341ccce7"/>
+				<textFieldExpression><![CDATA[$F{numerodias}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="7" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="187" splitType="Stretch">
+			<stackedBar3DChart>
+				<chart>
+					<reportElement x="1" y="0" width="553" height="187" uuid="9a74331c-b8f6-403c-ba5f-d4e3663983d2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nHabitacion}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nHabitacion}]]></categoryExpression>
+						<valueExpression><![CDATA[$V{numerodias_1}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</stackedBar3DChart>
+		</band>
+	</summary>
+</jasperReport>
